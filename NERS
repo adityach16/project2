@@ -1,0 +1,78 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyPk2Um2R9VLWSlAJeCBMlDY",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/adityach16/project2/blob/main/NERS\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "N5oXF06PcPgF",
+        "outputId": "5c40496a-c8c7-4cb2-bd37-0511ba7dea49"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "NER data saved to ner_entities.xlsx\n"
+          ]
+        }
+      ],
+      "source": [
+        "import pandas as pd\n",
+        "import spacy\n",
+        "\n",
+        "# Load SpaCy NER model\n",
+        "nlp = spacy.load(\"en_core_web_sm\")\n",
+        "\n",
+        "# Sample text\n",
+        "text = \"Apple Inc. is a technology company headquartered in Cupertino, California. Tim Cook is the CEO.\"\n",
+        "\n",
+        "# Process the text with SpaCy NER\n",
+        "doc = nlp(text)\n",
+        "\n",
+        "ner_data = []\n",
+        "for ent in doc.ents:\n",
+        "    ner_data.append({\n",
+        "        \"Entity Type\": ent.label_,\n",
+        "        \"Entity Text\": ent.text,\n",
+        "        \"Start Index\": ent.start_char,\n",
+        "        \"End Index\": ent.end_char,\n",
+        "        \"Sentence\": ent.sent.text\n",
+        "    })\n",
+        "\n",
+        "df = pd.DataFrame(ner_data)\n",
+        "excel_path = \"ner_entities.xlsx\"\n",
+        "df.to_excel(excel_path, index=False)\n",
+        "\n"
+      ]
+    }
+  ]
+}
